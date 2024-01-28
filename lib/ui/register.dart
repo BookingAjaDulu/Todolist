@@ -1,17 +1,17 @@
-import 'package:akadmobile/ui/matkul_page.dart';
-import 'package:akadmobile/ui/register.dart';
+import 'package:akadmobile/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -25,17 +25,18 @@ class _LoginScreenState extends State<LoginScreen> {
     _notificationMessage = '';
   }
 
-  Future<void> _login() async {
+  Future<void> _register() async {
     setState(() {
       _isLoading = true;
     });
 
-    const String url = 'http://localhost/lapang-api/public/login'; // Replace with your actual API endpoint
+    const String url = 'http://localhost/lapang-api/public/registrasi'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
         Uri.parse(url),
         body: {
+          'nama': _nameController.text,
           'email': _emailController.text,
           'password': _passwordController.text,
         },
@@ -43,22 +44,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        print('Login successful. Token: ${data['token']}');
+        print('Registration successful. Token: ${data['token']}');
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BookingPage(),
-          ),
-        );
-
-        _showNotification('Login successful', true);
+        _showNotification('Registration successful', true);
       } else {
-        _showNotification('Login failed. Please check your credentials.', false);
+        _showNotification('Registration failed. Please try again.', false);
       }
     } catch (error) {
-      print('Error during login. $error');
-      _showNotification('An error occurred during login.', false);
+      print('Error during registration. $error');
+      _showNotification('An error occurred during registration.', false);
     } finally {
       setState(() {
         _isLoading = false;
@@ -104,9 +98,20 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Login',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Text(
+                'Create Account',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -127,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                onPressed: _isLoading ? null : _login,
+                onPressed: _isLoading ? null : _register,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                 ),
@@ -135,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ? const CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       )
-                    : const Text('Login'),
+                    : const Text('Register'),
               ),
               const SizedBox(height: 16),
               if (_notificationMessage.isNotEmpty)
@@ -161,17 +166,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-             const SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RegisterScreen(),
+                      builder: (context) => LoginScreen(),
                     ),
                   );
                 },
-                child: const Text('Belum Punya Akun? Register'),
+                child: const Text('Already have an account? Login'),
               ),
             ],
           ),

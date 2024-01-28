@@ -1,5 +1,4 @@
 import 'package:akadmobile/ui/login.dart';
-import 'package:akadmobile/ui/matkul_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
