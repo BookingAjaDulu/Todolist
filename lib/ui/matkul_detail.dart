@@ -20,9 +20,11 @@ class MatkulDetail extends StatefulWidget {
 }
 
 class _MatkulDetailState extends State<MatkulDetail> {
-  String? kodeMatkul;
-  String? namaMatkul;
-  int? sks;
+  String? namaLapang;
+  String? tanggal;
+  String? jamMulai;
+  String? totalJamMain;
+  String? nominal;
 
   @override
   void initState() {
@@ -32,18 +34,20 @@ class _MatkulDetailState extends State<MatkulDetail> {
 
   Future<void> fetchDataDetail() async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2/toko-api/public/matkul/${widget.id}'),
+      Uri.parse('http://192.168.18.5/lapang-api/public/booking/${widget.id}'),
     );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final sksValue = data['data']['sks'];
+      final lapangValue = data['data']['nama_lapang'];
 
-      if (sksValue != null) {
+      if (lapangValue != null) {
         setState(() {
-          kodeMatkul = data['data']['kode_matkul'];
-          namaMatkul = data['data']['nama_matkul'];
-          sks = int.tryParse(sksValue) ?? 0;
+          namaLapang = data['data']['nama_lapang'];
+          tanggal = data['data']['tanggal'];
+          jamMulai = data['data']['jam_mulai'];
+          totalJamMain = data['data']['total_jam_main'];
+          nominal = data['data']['nominal'];
         });
       }
     }
@@ -53,16 +57,18 @@ class _MatkulDetailState extends State<MatkulDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Matkul'),
+        title: const Text('Detail Booking'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDetailColumn("Kode Matkul", kodeMatkul),
-            _buildDetailColumn("Nama Matkul", namaMatkul),
-            _buildDetailColumn("Sks", sks?.toString()),
+            _buildDetailColumn("Nama Lapangan", namaLapang),
+            _buildDetailColumn("Tanggal", tanggal),
+            _buildDetailColumn("Jam Mulai", jamMulai),
+            _buildDetailColumn("Total Jam Main", totalJamMain),
+            _buildDetailColumn("Nominal", nominal),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -70,9 +76,11 @@ class _MatkulDetailState extends State<MatkulDetail> {
                   MaterialPageRoute(
                     builder: (context) => MatkulUpdate(
                       id: widget.id,
-                      kodeMatkul: kodeMatkul,
-                      namaMatkul: namaMatkul,
-                      sks: sks,
+                      namaLapang: namaLapang,
+                      tanggal: tanggal,
+                      jamMulai: jamMulai,
+                      totalJamMain: totalJamMain,
+                      nominal:nominal,
                       fetchDataDetail: widget.fetchDataDetail,
                     ),
                   ),

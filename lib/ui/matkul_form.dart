@@ -1,7 +1,6 @@
+import 'package:akadmobile/ui/matkul_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../main.dart';
 
 class MatkulForm extends StatefulWidget {
   const MatkulForm({Key? key}) : super(key: key);
@@ -26,7 +25,7 @@ class _MatkulFormState extends State<MatkulForm> {
 
 
   Future<String> _simpanData() async {
-    const String url = 'http://localhost/lapang-api/public/booking';
+    const String url = 'http://192.168.18.5/lapang-api/public/booking';
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -46,13 +45,26 @@ class _MatkulFormState extends State<MatkulForm> {
     }
   }
 
-  void _showNotification(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+void _showNotification(String message) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Notification'),
         content: Text(message),
-      ),
-    );
-  }
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +192,7 @@ class ResultScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MainApp(),
+                    builder: (context) => const BookingPage(),
                   ),
                 );
               },

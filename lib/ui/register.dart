@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
-    const String url = 'http://localhost/lapang-api/public/registrasi'; // Replace with your actual API endpoint
+    const String url = 'http://192.168.18.5/lapang-api/public/registrasi'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
@@ -60,34 +60,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  void _showNotification(String message, bool isSuccess) {
-    setState(() {
-      _notificationMessage = message;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                isSuccess ? Icons.check : Icons.error,
-                color: Colors.white,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
+void _showNotification(String message, bool isSuccess) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(isSuccess ? 'Success' : 'Error'),
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              isSuccess ? Icons.check : Icons.error,
+              color: isSuccess ? Colors.green : Colors.red,
+            ),
+            const SizedBox(width: 10),
+            Text(message),
+          ],
         ),
-        backgroundColor: isSuccess ? Colors.green : Colors.red,
-      ),
-    );
-  }
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Create Account',
+                'Register',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -176,7 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   );
                 },
-                child: const Text('Already have an account? Login'),
+                child: const Text('Sudah Punya Akun? Login'),
               ),
             ],
           ),

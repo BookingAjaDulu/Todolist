@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    const String url = 'http://localhost/lapang-api/public/login'; // Replace with your actual API endpoint
+    const String url = 'http://192.168.18.5/lapang-api/public/login'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
@@ -66,34 +66,36 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _showNotification(String message, bool isSuccess) {
-    setState(() {
-      _notificationMessage = message;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                isSuccess ? Icons.check : Icons.error,
-                color: Colors.white,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
+void _showNotification(String message, bool isSuccess) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(isSuccess ? 'Success' : 'Error'),
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              isSuccess ? Icons.check : Icons.error,
+              color: isSuccess ? Colors.green : Colors.red,
+            ),
+            const SizedBox(width: 10),
+            Text(message),
+          ],
         ),
-        backgroundColor: isSuccess ? Colors.green : Colors.red,
-      ),
-    );
-  }
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {

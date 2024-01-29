@@ -3,20 +3,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class MatkulUpdate extends StatefulWidget {
-  final String? id; // Menggunakan id sebagai parameter
-  final String? kodeMatkul;
-  final String? namaMatkul;
-  final int? sks;
-  // final Function() fetchData;
+  final String? id;
+  final String? namaLapang;
+  final String? tanggal;
+  final String? jamMulai;
+  final String? totalJamMain;
+  final String? nominal;
   final Function() fetchDataDetail;
 
-  const MatkulUpdate({Key? key,
+  const MatkulUpdate({
+    Key? key,
     this.id,
-    this.kodeMatkul,
-    this.namaMatkul,
-    this.sks,
-    // required this.fetchData
-    required this.fetchDataDetail
+    this.namaLapang,
+    this.tanggal,
+    this.jamMulai,
+    this.totalJamMain,
+    this.nominal,
+    required this.fetchDataDetail,
   }) : super(key: key);
 
   @override
@@ -24,102 +27,113 @@ class MatkulUpdate extends StatefulWidget {
 }
 
 class _MatkulUpdateState extends State<MatkulUpdate> {
-
-  final TextEditingController _kodeMatkulController = TextEditingController();
-  final TextEditingController _namaMatkulController = TextEditingController();
-  final TextEditingController _sksMatkulController = TextEditingController();
+  final TextEditingController _namaLapangController = TextEditingController();
+  final TextEditingController _tanggalController = TextEditingController();
+  final TextEditingController _jamMulaiController = TextEditingController();
+  final TextEditingController _totalJamMainController = TextEditingController();
+  final TextEditingController _nominalController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _kodeMatkulController.text = widget.kodeMatkul ?? '';
-    _namaMatkulController.text = widget.namaMatkul ?? '';
-    _sksMatkulController.text = widget.sks?.toString() ?? '';
+    _namaLapangController.text = widget.namaLapang ?? '';
+    _tanggalController.text = widget.tanggal ?? '';
+    _jamMulaiController.text = widget.jamMulai ?? '';
+    _totalJamMainController.text = widget.totalJamMain ?? '';
+    _nominalController.text = widget.nominal ?? '';
   }
 
   Future<void> _updateMatkul() async {
-    final String url = 'http://10.0.2.2/toko-api/public/matkul/${widget.id}';
+    final String url = 'http://192.168.18.5/lapang-api/public/booking/${widget.id}';
 
-    final response = await http.put(
-      Uri.parse(url),
-      body: jsonEncode({
-        'kode_matkul': _kodeMatkulController.text,
-        'nama_matkul': _namaMatkulController.text,
-        'sks': int.parse(_sksMatkulController.text),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
+    try {
+      final response = await http.put(
+        Uri.parse(url),
+        body: jsonEncode({
+          'nama_lapang': _namaLapangController.text,
+          'tanggal': _tanggalController.text,
+          'jam_mulai': _jamMulaiController.text,
+          'total_jam_main': _totalJamMainController.text,
+          'nominal': _nominalController.text,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Data berhasil diperbarui
+        _showSuccessDialog();
+      } else {
+        // Tangani kesalahan jika ada masalah dengan permintaan HTTP
+        _showErrorDialog();
+      }
+    } catch (e) {
+      // Tangani kesalahan umum
+      _showErrorDialog();
+    }
+  }
+
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Notifikasi'),
+          content: const Text('Data berhasil diperbarui.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+              },
+              child: const Text('Tutup'),
+            ),
+          ],
+        );
       },
     );
+  }
 
-    if (response.statusCode == 200) {
-      // Data berhasil diperbarui
-      // Tambahkan notifikasi atau tindakan lain yang sesuai
-      // Membersihkan kontroller teks
-
-      _kodeMatkulController.clear();
-      _namaMatkulController.clear();
-      _sksMatkulController.clear();
-
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Notifikasi'),
-            content: const Text('Data berhasil diperbarui.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
-                },
-                child: const Text('Tutup'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Tangani kesalahan jika ada masalah dengan permintaan HTTP
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Notifikasi'),
-            content: const Text('Gagal memperbarui data.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Tutup'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Notifikasi'),
+          content: const Text('Gagal memperbarui data. Coba lagi.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Tutup'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Matkul'),
+        title: const Text('Update Catatan'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextField("Kode Matkul", _kodeMatkulController),
-            _buildTextField("Nama Matkul", _namaMatkulController),
-            _buildTextField("Sks", _sksMatkulController),
+            _buildTextField("Nama Lapangan", _namaLapangController),
+            _buildTextField("Tanggal", _tanggalController),
+            _buildTextField("Jam Mulai", _jamMulaiController),
+            _buildTextField("Total Jam Main", _totalJamMainController),
+            _buildTextField("Nomimal", _nominalController),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                _updateMatkul().then((_) {
-                  widget.fetchDataDetail();
-                  Navigator.pop(context);
-                });
+                _updateMatkul();
               },
               child: const Text('Simpan Perubahan'),
             ),
