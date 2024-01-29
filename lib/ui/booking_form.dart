@@ -1,15 +1,15 @@
-import 'package:akadmobile/ui/matkul_page.dart';
+import 'package:akadmobile/ui/booking_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class MatkulForm extends StatefulWidget {
-  const MatkulForm({Key? key}) : super(key: key);
+class BookingForm extends StatefulWidget {
+  const BookingForm({Key? key}) : super(key: key);
 
   @override
-  _MatkulFormState createState() => _MatkulFormState();
+  _BookingFormState createState() => _BookingFormState();
 }
 
-class _MatkulFormState extends State<MatkulForm> {
+class _BookingFormState extends State<BookingForm> {
   final _namaLapangTextboxController = TextEditingController();
   final _tanggalTextboxController = TextEditingController();
   final _jamMulaiTextboxController = TextEditingController();
@@ -25,7 +25,7 @@ class _MatkulFormState extends State<MatkulForm> {
 
 
   Future<String> _simpanData() async {
-    const String url = 'http://192.168.18.5/lapang-api/public/booking';
+    const String url = 'http://10.200.0.64/lapang-api/public/booking';
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -70,7 +70,7 @@ void _showNotification(String message) {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Form Matkul'),
+        title: const Text('Form Catatan Booking'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'matkul_update.dart';
+import 'booking_update.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class MatkulDetail extends StatefulWidget {
+class BookingDetail extends StatefulWidget {
   final String id; // Menggunakan id sebagai parameter
   final Function() fetchDataPage;
   final Function() fetchDataDetail;
 
-  const MatkulDetail({
+  const BookingDetail({
     Key? key,
     required this.id,
     required this.fetchDataPage,
@@ -16,10 +16,10 @@ class MatkulDetail extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MatkulDetail> createState() => _MatkulDetailState();
+  State<BookingDetail> createState() => _BookingDetailState();
 }
 
-class _MatkulDetailState extends State<MatkulDetail> {
+class _BookingDetailState extends State<BookingDetail> {
   String? namaLapang;
   String? tanggal;
   String? jamMulai;
@@ -34,7 +34,7 @@ class _MatkulDetailState extends State<MatkulDetail> {
 
   Future<void> fetchDataDetail() async {
     final response = await http.get(
-      Uri.parse('http://192.168.18.5/lapang-api/public/booking/${widget.id}'),
+      Uri.parse('http://10.200.0.64/lapang-api/public/booking/${widget.id}'),
     );
 
     if (response.statusCode == 200) {
@@ -74,7 +74,7 @@ class _MatkulDetailState extends State<MatkulDetail> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MatkulUpdate(
+                    builder: (context) => BookingUpdate(
                       id: widget.id,
                       namaLapang: namaLapang,
                       tanggal: tanggal,

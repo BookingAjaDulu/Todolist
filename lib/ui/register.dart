@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
-    const String url = 'http://192.168.18.5/lapang-api/public/registrasi'; // Replace with your actual API endpoint
+    const String url = 'http://10.200.0.64/lapang-api/public/registrasi'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
@@ -94,6 +94,7 @@ void _showNotification(String message, bool isSuccess) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.limeAccent, // Set the background color to yellow
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -132,18 +133,23 @@ void _showNotification(String message, bool isSuccess) {
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: _isLoading ? null : _register,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                ),
-                child: _isLoading
-                    ? const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      )
-                    : const Text('Register'),
-              ),
+const SizedBox(height: 32),
+ElevatedButton(
+  onPressed: _isLoading ? null : _register,
+  style: ElevatedButton.styleFrom(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    backgroundColor: Colors.black, // Set the background color to black
+  ),
+  child: _isLoading
+      ? const CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        )
+      : const Text(
+          'Register',
+          style: TextStyle(color: Colors.white), // Set text color to white
+        ),
+),
+
               const SizedBox(height: 16),
               if (_notificationMessage.isNotEmpty)
                 FadeTransition(
@@ -162,24 +168,28 @@ void _showNotification(String message, bool isSuccess) {
                     child: Text(
                       _notificationMessage,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    ),
-                  );
-                },
-                child: const Text('Sudah Punya Akun? Login'),
-              ),
+const SizedBox(height: 16),
+TextButton(
+  onPressed: () {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(),
+      ),
+    );
+  },
+  child: const Text(
+    'Sudah Punya Akun? Login',
+    style: TextStyle(color: Colors.black), // Set text color to black
+  ),
+),
+
             ],
           ),
         ),

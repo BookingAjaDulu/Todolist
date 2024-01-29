@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class MatkulUpdate extends StatefulWidget {
+class BookingUpdate extends StatefulWidget {
   final String? id;
   final String? namaLapang;
   final String? tanggal;
@@ -11,7 +11,7 @@ class MatkulUpdate extends StatefulWidget {
   final String? nominal;
   final Function() fetchDataDetail;
 
-  const MatkulUpdate({
+  const BookingUpdate({
     Key? key,
     this.id,
     this.namaLapang,
@@ -23,10 +23,10 @@ class MatkulUpdate extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MatkulUpdate> createState() => _MatkulUpdateState();
+  State<BookingUpdate> createState() => _BookingUpdateState();
 }
 
-class _MatkulUpdateState extends State<MatkulUpdate> {
+class _BookingUpdateState extends State<BookingUpdate> {
   final TextEditingController _namaLapangController = TextEditingController();
   final TextEditingController _tanggalController = TextEditingController();
   final TextEditingController _jamMulaiController = TextEditingController();
@@ -43,8 +43,8 @@ class _MatkulUpdateState extends State<MatkulUpdate> {
     _nominalController.text = widget.nominal ?? '';
   }
 
-  Future<void> _updateMatkul() async {
-    final String url = 'http://192.168.18.5/lapang-api/public/booking/${widget.id}';
+  Future<void> _updateBooking() async {
+    final String url = 'http://10.200.0.64/lapang-api/public/booking/${widget.id}';
 
     try {
       final response = await http.put(
@@ -133,7 +133,7 @@ class _MatkulUpdateState extends State<MatkulUpdate> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                _updateMatkul();
+                _updateBooking();
               },
               child: const Text('Simpan Perubahan'),
             ),

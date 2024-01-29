@@ -1,10 +1,10 @@
 import 'package:akadmobile/ui/login.dart';
 import 'package:flutter/material.dart';
-import 'matkul_detail.dart';
+import 'booking_detail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'matkul_form.dart';
+import 'booking_form.dart';
 
 class Booking {
   final String id;
@@ -53,7 +53,7 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> fetchDataPage() async {
     final response = await http.get(
-      Uri.parse('http://192.168.18.5/lapang-api/public/booking'),
+      Uri.parse('http://10.200.0.64/lapang-api/public/booking'),
     );
 
     if (response.statusCode == 200) {
@@ -68,7 +68,7 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> deleteBooking(String id) async {
     final response = await http.delete(
-      Uri.parse('http://192.168.18.5/lapang-api/public/booking/$id'),
+      Uri.parse('http://10.200.0.64/lapang-api/public/booking/$id'),
     );
 
     if (response.statusCode == 200) {
@@ -90,7 +90,7 @@ class _BookingPageState extends State<BookingPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MatkulForm(),
+                  builder: (context) => BookingForm(),
                 ),
               );
             },
@@ -129,7 +129,7 @@ class _BookingPageState extends State<BookingPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MatkulDetail(
+                      builder: (context) => BookingDetail(
                         id: booking.id,
                         fetchDataPage: fetchDataPage,
                         fetchDataDetail: () {},
