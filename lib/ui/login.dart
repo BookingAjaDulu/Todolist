@@ -1,5 +1,5 @@
-import 'package:akadmobile/ui/booking_page.dart';
-import 'package:akadmobile/ui/register.dart';
+import 'package:booking/ui/booking_page.dart';
+import 'package:booking/ui/register.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -30,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    const String url = 'http://10.200.0.64/lapang-api/public/login'; // Replace with your actual API endpoint
+    const String url =
+        'http://192.168.1.18/booking-api/public/login'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
@@ -54,7 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         _showNotification('Login successful', true);
       } else {
-        _showNotification('Login failed. Please check your credentials.', false);
+        _showNotification(
+            'Login failed. Please check your credentials.', false);
       }
     } catch (error) {
       print('Error during login. $error');
@@ -128,22 +130,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-ElevatedButton(
-  onPressed: _isLoading ? null : _login,
-  style: ElevatedButton.styleFrom(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    backgroundColor: Colors.black, // Set the background color to black
-  ),
-  child: _isLoading
-      ? const CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        )
-      : const Text(
-          'Login',
-          style: TextStyle(color: Colors.white), // Set text color to white
-        ),
-),
-
+              ElevatedButton(
+                onPressed: _isLoading ? null : _login,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  backgroundColor:
+                      Colors.black, // Set the background color to black
+                ),
+                child: _isLoading
+                    ? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
+                    : const Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Colors.white), // Set text color to white
+                      ),
+              ),
               const SizedBox(height: 16),
               if (_notificationMessage.isNotEmpty)
                 FadeTransition(
@@ -168,22 +171,22 @@ ElevatedButton(
                     ),
                   ),
                 ),
-const SizedBox(height: 16),
-TextButton(
-  onPressed: () {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RegisterScreen(),
-      ),
-    );
-  },
-  child: const Text(
-    'Belum Punya Akun? Register',
-    style: TextStyle(color: Colors.black), // Set text color to black
-  ),
-),
-
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegisterScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Belum Punya Akun? Register',
+                  style:
+                      TextStyle(color: Colors.black), // Set text color to black
+                ),
+              ),
             ],
           ),
         ),

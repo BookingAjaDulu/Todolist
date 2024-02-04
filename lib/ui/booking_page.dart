@@ -1,4 +1,4 @@
-import 'package:akadmobile/ui/login.dart';
+import 'package:booking/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'booking_detail.dart';
 import 'package:http/http.dart' as http;
@@ -53,7 +53,7 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> fetchDataPage() async {
     final response = await http.get(
-      Uri.parse('http://10.200.0.64/lapang-api/public/booking'),
+      Uri.parse('http://192.168.1.18/booking-api/public/booking'),
     );
 
     if (response.statusCode == 200) {
@@ -68,7 +68,7 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> deleteBooking(String id) async {
     final response = await http.delete(
-      Uri.parse('http://10.200.0.64/lapang-api/public/booking/$id'),
+      Uri.parse('http://192.168.1.18/booking-api/public/booking/$id'),
     );
 
     if (response.statusCode == 200) {
@@ -106,11 +106,11 @@ class _BookingPageState extends State<BookingPage> {
               title: Text('Logout'),
               onTap: () {
                 Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    ),
-                  );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
               },
             ),
           ],
@@ -121,7 +121,8 @@ class _BookingPageState extends State<BookingPage> {
         itemBuilder: (context, index) {
           final booking = bookingList[index];
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Card(
               elevation: 5.0,
               child: InkWell(
@@ -140,9 +141,11 @@ class _BookingPageState extends State<BookingPage> {
                 child: ListTile(
                   title: Text(
                     "${booking.namaLapang} - ${booking.tanggal} ${booking.jamMulai}",
-                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Rp.${booking.nominal}', style: TextStyle(fontSize: 15.0)),
+                  subtitle: Text('Rp.${booking.nominal}',
+                      style: TextStyle(fontSize: 15.0)),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {

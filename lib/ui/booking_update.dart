@@ -44,7 +44,7 @@ class _BookingUpdateState extends State<BookingUpdate> {
   }
 
   Future<void> _updateBooking() async {
-    final String url = 'http://10.200.0.64/lapang-api/public/booking/${widget.id}';
+    final String url = 'http://192.168.1.18/booking-api/public/booking/${widget.id}';
 
     try {
       final response = await http.put(

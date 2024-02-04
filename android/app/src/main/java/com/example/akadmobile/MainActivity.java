@@ -1,4 +1,4 @@
-package com.example.akadmobile;
+package com.example.booking;
 
 import io.flutter.embedding.android.FlutterActivity;
 

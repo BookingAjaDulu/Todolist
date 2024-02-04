@@ -1,4 +1,4 @@
-import 'package:akadmobile/ui/login.dart';
+import 'package:booking/ui/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
