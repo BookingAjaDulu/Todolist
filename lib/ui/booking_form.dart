@@ -23,7 +23,11 @@ class _BookingFormState extends State<BookingForm> {
   late String _nominal = '';
 
   Future<String> _simpanData() async {
+<<<<<<< HEAD
     const String url = 'http://192.168.100.53/booking-api/public/booking';
+=======
+    const String url = 'http://192.168.18.5/lapang-api/public/booking';
+>>>>>>> 0150204ccbc4f257f56bc661c0dbb93009b9c378
     final response = await http.post(
       Uri.parse(url),
       body: {

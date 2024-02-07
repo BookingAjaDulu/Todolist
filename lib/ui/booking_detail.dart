@@ -34,7 +34,11 @@ class _BookingDetailState extends State<BookingDetail> {
 
   Future<void> fetchDataDetail() async {
     final response = await http.get(
+<<<<<<< HEAD
       Uri.parse('http://192.168.100.53/booking-api/public/booking/${widget.id}'),
+=======
+      Uri.parse('http://192.168.18.5/lapang-api/public/booking/${widget.id}'),
+>>>>>>> 0150204ccbc4f257f56bc661c0dbb93009b9c378
     );
 
     if (response.statusCode == 200) {

@@ -55,7 +55,11 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> fetchDataPage() async {
     final response = await http.get(
+<<<<<<< HEAD
       Uri.parse('http://192.168.100.53/booking-api/public/booking'),
+=======
+      Uri.parse('http://192.168.18.5/lapang-api/public/booking'),
+>>>>>>> 0150204ccbc4f257f56bc661c0dbb93009b9c378
     );
 
     if (response.statusCode == 200) {
@@ -73,7 +77,11 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> deleteBooking(String id) async {
     final response = await http.delete(
+<<<<<<< HEAD
       Uri.parse('http://192.168.100.53/booking-api/public/booking/$id'),
+=======
+      Uri.parse('http://192.168.18.5/lapang-api/public/booking/$id'),
+>>>>>>> 0150204ccbc4f257f56bc661c0dbb93009b9c378
     );
 
     if (response.statusCode == 200) {

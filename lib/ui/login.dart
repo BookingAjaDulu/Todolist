@@ -33,7 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
+<<<<<<< HEAD
     const String url = 'http://192.168.100.53/booking-api/public/login'; // Replace with your actual API endpoint
+=======
+    const String url = 'http://192.168.18.5/lapang-api/public/login'; // Replace with your actual API endpoint
+>>>>>>> 0150204ccbc4f257f56bc661c0dbb93009b9c378
 
     try {
       final response = await http.post(
