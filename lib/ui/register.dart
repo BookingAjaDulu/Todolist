@@ -1,4 +1,4 @@
-import 'package:akadmobile/ui/login.dart';
+import 'package:booking/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -30,7 +30,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
+<<<<<<< HEAD
     const String url = 'http://192.168.18.5/lapang-api/public/registrasi'; // Replace with your actual API endpoint
+=======
+    const String url =
+        'http://192.168.1.18/booking-api/public/registrasi'; // Replace with your actual API endpoint
+>>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
 
     try {
       final response = await http.post(
@@ -60,41 +65,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-void _showNotification(String message, bool isSuccess) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text(isSuccess ? 'Success' : 'Error'),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              isSuccess ? Icons.check : Icons.error,
-              color: isSuccess ? Colors.green : Colors.red,
-            ),
-            const SizedBox(width: 10),
-            Text(message),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('OK'),
+  void _showNotification(String message, bool isSuccess) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(isSuccess ? 'Success' : 'Error'),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                isSuccess ? Icons.check : Icons.error,
+                color: isSuccess ? Colors.green : Colors.red,
+              ),
+              const SizedBox(width: 10),
+              Text(message),
+            ],
           ),
-        ],
-      );
-    },
-  );
-}
-
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Colors.limeAccent, // Set the background color to yellow
+      backgroundColor: Colors.limeAccent, // Set the background color to yellow
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -179,7 +183,28 @@ void _showNotification(String message, bool isSuccess) {
                         style: TextStyle(color: Colors.white), // Set text color to white
                       ),
               ),
+<<<<<<< HEAD
 
+=======
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: _isLoading ? null : _register,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  backgroundColor:
+                      Colors.black, // Set the background color to black
+                ),
+                child: _isLoading
+                    ? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
+                    : const Text(
+                        'Register',
+                        style: TextStyle(
+                            color: Colors.white), // Set text color to white
+                      ),
+              ),
+>>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
               const SizedBox(height: 16),
               if (_notificationMessage.isNotEmpty)
                 FadeTransition(
@@ -204,22 +229,22 @@ void _showNotification(String message, bool isSuccess) {
                     ),
                   ),
                 ),
-const SizedBox(height: 16),
-TextButton(
-  onPressed: () {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LoginScreen(),
-      ),
-    );
-  },
-  child: const Text(
-    'Sudah Punya Akun? Login',
-    style: TextStyle(color: Colors.black), // Set text color to black
-  ),
-),
-
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Sudah Punya Akun? Login',
+                  style:
+                      TextStyle(color: Colors.black), // Set text color to black
+                ),
+              ),
             ],
           ),
         ),

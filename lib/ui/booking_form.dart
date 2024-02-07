@@ -1,4 +1,4 @@
-import 'package:akadmobile/ui/booking_page.dart';
+import 'package:booking/ui/booking_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,16 +16,18 @@ class _BookingFormState extends State<BookingForm> {
   final _totalJamMainTextboxController = TextEditingController();
   final _nominalTextboxController = TextEditingController();
 
-
   late String _namaLapang = '';
   late String _tanggal = '';
   late String _jamMulai = '';
   late String _totalJamMain = '';
   late String _nominal = '';
 
-
   Future<String> _simpanData() async {
+<<<<<<< HEAD
     const String url = 'http://192.168.18.5/lapang-api/public/booking';
+=======
+    const String url = 'http://192.168.1.18/booking-api/public/booking';
+>>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -34,7 +36,6 @@ class _BookingFormState extends State<BookingForm> {
         'jam_mulai': _jamMulaiTextboxController.text,
         'total_jam_main': _totalJamMainTextboxController.text,
         'nominal': _nominalTextboxController.text,
-
       },
     );
 
@@ -45,26 +46,25 @@ class _BookingFormState extends State<BookingForm> {
     }
   }
 
-void _showNotification(String message) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Notification'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
-}
-
+  void _showNotification(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Notification'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,6 @@ void _showNotification(String message) {
                   _jamMulai = _jamMulaiTextboxController.text;
                   _totalJamMain = _totalJamMainTextboxController.text;
                   _nominal = _nominalTextboxController.text;
-
 
                   Navigator.push(
                     context,
@@ -153,7 +152,8 @@ void _showNotification(String message) {
       cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
     );
   }
-    Widget _textboxJamMulai() {
+
+  Widget _textboxJamMulai() {
     return TextField(
       decoration: InputDecoration(
       labelText: "Jam Mulai",
@@ -166,7 +166,8 @@ void _showNotification(String message) {
       cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
     );
   }
-    Widget _textboxTotalJamMain() {
+
+  Widget _textboxTotalJamMain() {
     return TextField(
       decoration: InputDecoration(
       labelText: "Total Jam Main",
@@ -180,7 +181,7 @@ void _showNotification(String message) {
     );
   }
 
-    Widget _textboxNominal() {
+  Widget _textboxNominal() {
     return TextField(
       decoration: InputDecoration(
       labelText: "Harga",
