@@ -53,7 +53,7 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> fetchDataPage() async {
     final response = await http.get(
-      Uri.parse('http://10.200.0.64/lapang-api/public/booking'),
+      Uri.parse('http://192.168.18.5/lapang-api/public/booking'),
     );
 
     if (response.statusCode == 200) {
@@ -68,7 +68,7 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> deleteBooking(String id) async {
     final response = await http.delete(
-      Uri.parse('http://10.200.0.64/lapang-api/public/booking/$id'),
+      Uri.parse('http://192.168.18.5/lapang-api/public/booking/$id'),
     );
 
     if (response.statusCode == 200) {
@@ -83,6 +83,7 @@ class _BookingPageState extends State<BookingPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('List Catatan Booking'),
+        backgroundColor: Colors.black, // Ubah warna Navbar menjadi hitam
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -116,6 +117,7 @@ class _BookingPageState extends State<BookingPage> {
           ],
         ),
       ),
+      backgroundColor: Colors.yellow, // Set latar belakang menjadi kuning
       body: ListView.builder(
         itemCount: bookingList.length,
         itemBuilder: (context, index) {

@@ -44,7 +44,7 @@ class _BookingUpdateState extends State<BookingUpdate> {
   }
 
   Future<void> _updateBooking() async {
-    final String url = 'http://10.200.0.64/lapang-api/public/booking/${widget.id}';
+    final String url = 'http://192.168.18.5/lapang-api/public/booking/${widget.id}';
 
     try {
       final response = await http.put(
@@ -119,6 +119,7 @@ class _BookingUpdateState extends State<BookingUpdate> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Update Catatan'),
+        backgroundColor: Colors.black, // Ubah warna Navbar menjadi hitam
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

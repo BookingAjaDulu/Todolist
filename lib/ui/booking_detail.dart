@@ -34,7 +34,7 @@ class _BookingDetailState extends State<BookingDetail> {
 
   Future<void> fetchDataDetail() async {
     final response = await http.get(
-      Uri.parse('http://10.200.0.64/lapang-api/public/booking/${widget.id}'),
+      Uri.parse('http://192.168.18.5/lapang-api/public/booking/${widget.id}'),
     );
 
     if (response.statusCode == 200) {
@@ -58,6 +58,7 @@ class _BookingDetailState extends State<BookingDetail> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Booking'),
+        backgroundColor: Colors.black, // Ubah warna Navbar menjadi hitam
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

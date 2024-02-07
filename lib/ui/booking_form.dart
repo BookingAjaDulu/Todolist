@@ -25,7 +25,7 @@ class _BookingFormState extends State<BookingForm> {
 
 
   Future<String> _simpanData() async {
-    const String url = 'http://10.200.0.64/lapang-api/public/booking';
+    const String url = 'http://192.168.18.5/lapang-api/public/booking';
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -71,6 +71,7 @@ void _showNotification(String message) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Form Catatan Booking'),
+        backgroundColor: Colors.black, // Ubah warna Navbar menjadi hitam
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -83,7 +84,8 @@ void _showNotification(String message) {
             _textboxNominal(),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
+              onPressed: ()
+               {
                 _simpanData().then((id) {
                   _namaLapang = _namaLapangTextboxController.text;
                   _tanggal = _tanggalTextboxController.text;
@@ -111,44 +113,84 @@ void _showNotification(String message) {
                   _showNotification(error.toString());
                 });
               },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  backgroundColor: Colors.black, // Set the background color to black
+                ),
               child: const Text('Simpan'),
             ),
           ],
         ),
       ),
+      backgroundColor: Colors.yellow, // Set latar belakang menjadi kuning
     );
   }
 
   Widget _textboxNamaLapang() {
     return TextField(
-      decoration: const InputDecoration(labelText: "Nama Lapangan"),
+      decoration: InputDecoration(
+      labelText: "Nama Lapangan",
+      labelStyle: TextStyle(color: Colors.black), // Ubah warna label teks
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black), // Ubah warna garis bawah saat focus
+      ),
+    ),
       controller: _namaLapangTextboxController,
+      cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
     );
   }
 
   Widget _textboxTanggal() {
     return TextField(
-      decoration: const InputDecoration(labelText: "Tanggal"),
+      decoration: InputDecoration(
+      labelText: "Tanggal",
+      labelStyle: TextStyle(color: Colors.black), // Ubah warna label teks
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black), // Ubah warna garis bawah saat focus
+      ),
+    ),
       controller: _tanggalTextboxController,
+      cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
     );
   }
     Widget _textboxJamMulai() {
     return TextField(
-      decoration: const InputDecoration(labelText: "Jam Mulai"),
+      decoration: InputDecoration(
+      labelText: "Jam Mulai",
+      labelStyle: TextStyle(color: Colors.black), // Ubah warna label teks
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black), // Ubah warna garis bawah saat focus
+      ),
+    ),
       controller: _jamMulaiTextboxController,
+      cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
     );
   }
     Widget _textboxTotalJamMain() {
     return TextField(
-      decoration: const InputDecoration(labelText: "Total Jam Main"),
+      decoration: InputDecoration(
+      labelText: "Total Jam Main",
+      labelStyle: TextStyle(color: Colors.black), // Ubah warna label teks
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black), // Ubah warna garis bawah saat focus
+      ),
+    ),
       controller: _totalJamMainTextboxController,
+      cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
     );
   }
 
     Widget _textboxNominal() {
     return TextField(
-      decoration: const InputDecoration(labelText: "Harga"),
+      decoration: InputDecoration(
+      labelText: "Harga",
+      labelStyle: TextStyle(color: Colors.black), // Ubah warna label teks
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black), // Ubah warna garis bawah saat focus
+      ),
+    ),
       controller: _nominalTextboxController,
+      cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
     );
   }
 }
@@ -176,6 +218,7 @@ class ResultScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hasil Input'),
+        backgroundColor: Colors.black, // Ubah warna Navbar menjadi hitam
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

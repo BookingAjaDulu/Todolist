@@ -17,12 +17,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late bool _isLoading;
   late String _notificationMessage;
+  late bool _isObscured; // Tambahkan variabel baru
+
 
   @override
   void initState() {
     super.initState();
     _isLoading = false;
     _notificationMessage = '';
+    _isObscured = true; // Inisialisasi dengan password tersembunyi
   }
 
   Future<void> _login() async {
@@ -30,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    const String url = 'http://10.200.0.64/lapang-api/public/login'; // Replace with your actual API endpoint
+    const String url = 'http://192.168.18.5/lapang-api/public/login'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
@@ -113,36 +116,69 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
               TextField(
                 controller: _emailController,
+                style: TextStyle(color: Colors.black), // Atur warna teks menjadi hitam
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Colors.black), // Mengatur warna label menjadi hitam
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black), // Warna border hitam
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black), // Ubah warna border saat focus
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                   borderSide: BorderSide(color: Colors.black), // Warna border hitam
+                  ),
                 ),
+                cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: _isObscured, // Menggunakan nilai _isObscured
+                style: TextStyle(color: Colors.black), // Atur warna teks menjadi hitam
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Colors.black), // Mengatur warna label menjadi hitam
+                  border: OutlineInputBorder(
+                   borderSide: BorderSide(color: Colors.black), // Warna border hitam
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black), // Ubah warna border saat focus
+                   ),
+                  enabledBorder: OutlineInputBorder(
+                   borderSide: BorderSide(color: Colors.black), // Warna border hitam
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscured ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black, // Set warna ikon menjadi hitam
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscured = !_isObscured; // Toggle _isObscured
+                      });
+                    },
+                  ),
                 ),
+                cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
               ),
               const SizedBox(height: 32),
-ElevatedButton(
-  onPressed: _isLoading ? null : _login,
-  style: ElevatedButton.styleFrom(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    backgroundColor: Colors.black, // Set the background color to black
-  ),
-  child: _isLoading
-      ? const CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        )
-      : const Text(
-          'Login',
-          style: TextStyle(color: Colors.white), // Set text color to white
-        ),
-),
+              ElevatedButton(
+                onPressed: _isLoading ? null : _login,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  backgroundColor: Colors.black, // Set the background color to black
+                ),
+                child: _isLoading
+                    ? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
+                    : const Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white), // Set text color to white
+                      ),
+              ),
 
               const SizedBox(height: 16),
               if (_notificationMessage.isNotEmpty)
