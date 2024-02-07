@@ -17,12 +17,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   late bool _isLoading;
   late String _notificationMessage;
+  late bool _isObscured; // Tambahkan variabel baru
 
   @override
   void initState() {
     super.initState();
     _isLoading = false;
     _notificationMessage = '';
+    _isObscured = true; // Inisialisasi dengan password tersembunyi
   }
 
   Future<void> _register() async {
@@ -30,12 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
-<<<<<<< HEAD
-    const String url = 'http://192.168.18.5/lapang-api/public/registrasi'; // Replace with your actual API endpoint
-=======
-    const String url =
-        'http://192.168.1.18/booking-api/public/registrasi'; // Replace with your actual API endpoint
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
+    const String url = 'http://192.168.100.53/booking-api/public/registrasi'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
@@ -115,6 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 16),
               TextField(
                 controller: _nameController,
+                obscureText: _isObscured, // Menggunakan nilai _isObscured
                 decoration: InputDecoration(
                   labelText: 'Name',
                   labelStyle: TextStyle(color: Colors.black), // Mengatur warna label menjadi hitam
@@ -149,24 +147,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.black), // Mengatur warna label menjadi hitam
-                  border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black), // Warna border hitam
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black), // Ubah warna border saat focus
-                   ),
-                  enabledBorder: OutlineInputBorder(
-                   borderSide: BorderSide(color: Colors.black), // Warna border hitam
-                  ),
-                ),
-               cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
-              ),
+            TextField(
+  controller: _passwordController,
+  obscureText: _isObscured, // Menggunakan nilai _isObscured
+  decoration: InputDecoration(
+    labelText: 'Password',
+    suffixIcon: IconButton(
+      icon: Icon(
+        _isObscured ? Icons.visibility : Icons.visibility_off,
+        color: Colors.black,
+      ),
+      onPressed: () {
+        setState(() {
+          _isObscured = !_isObscured; // Toggle _isObscured
+        });
+      },
+    ),
+    labelStyle: TextStyle(color: Colors.black), // Mengatur warna label menjadi hitam
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black), // Warna border hitam
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black), // Ubah warna border saat focus
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black), // Warna border hitam
+    ),
+  ),
+  cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
+),
+
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _isLoading ? null : _register,
@@ -183,28 +193,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(color: Colors.white), // Set text color to white
                       ),
               ),
-<<<<<<< HEAD
-
-=======
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: _isLoading ? null : _register,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  backgroundColor:
-                      Colors.black, // Set the background color to black
-                ),
-                child: _isLoading
-                    ? const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      )
-                    : const Text(
-                        'Register',
-                        style: TextStyle(
-                            color: Colors.white), // Set text color to white
-                      ),
-              ),
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
               const SizedBox(height: 16),
               if (_notificationMessage.isNotEmpty)
                 FadeTransition(

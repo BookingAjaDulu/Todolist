@@ -44,11 +44,7 @@ class _BookingUpdateState extends State<BookingUpdate> {
   }
 
   Future<void> _updateBooking() async {
-<<<<<<< HEAD
-    final String url = 'http://192.168.18.5/lapang-api/public/booking/${widget.id}';
-=======
-    final String url = 'http://192.168.1.18/booking-api/public/booking/${widget.id}';
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
+    final String url = 'http://192.168.100.53/booking-api/public/booking/${widget.id}';
 
     try {
       final response = await http.put(
@@ -131,7 +127,7 @@ class _BookingUpdateState extends State<BookingUpdate> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTextField("Nama Lapangan", _namaLapangController),
-            _buildTextField("Tanggal", _tanggalController),
+            _buildDateTextField("Tanggal", _tanggalController),
             _buildTextField("Jam Mulai", _jamMulaiController),
             _buildTextField("Total Jam Main", _totalJamMainController),
             _buildTextField("Nomimal", _nominalController),
@@ -170,4 +166,45 @@ class _BookingUpdateState extends State<BookingUpdate> {
       ],
     );
   }
+
+  Widget _buildDateTextField(String label, TextEditingController controller) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        label,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          suffixIcon: IconButton(
+            icon: Icon(Icons.calendar_today),
+            onPressed: () async {
+              // Menampilkan date picker ketika tombol di klik
+              final DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2101),
+              );
+
+              // Jika user memilih tanggal, update nilai controller
+              if (pickedDate != null) {
+                controller.text = pickedDate.toString();
+              }
+            },
+          ),
+        ),
+      ),
+      const SizedBox(height: 16),
+    ],
+  );
+}
+
 }

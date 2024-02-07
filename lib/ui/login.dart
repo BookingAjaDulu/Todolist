@@ -33,12 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-<<<<<<< HEAD
-    const String url = 'http://192.168.18.5/lapang-api/public/login'; // Replace with your actual API endpoint
-=======
-    const String url =
-        'http://192.168.1.18/booking-api/public/login'; // Replace with your actual API endpoint
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
+    const String url = 'http://192.168.100.53/booking-api/public/login'; // Replace with your actual API endpoint
 
     try {
       final response = await http.post(
@@ -174,12 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _isLoading ? null : _login,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-<<<<<<< HEAD
                   backgroundColor: Colors.black, // Set the background color to black
-=======
-                  backgroundColor:
-                      Colors.black, // Set the background color to black
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
                 ),
                 child: _isLoading
                     ? const CircularProgressIndicator(
@@ -187,17 +177,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     : const Text(
                         'Login',
-<<<<<<< HEAD
                         style: TextStyle(color: Colors.white), // Set text color to white
                       ),
               ),
 
-=======
-                        style: TextStyle(
-                            color: Colors.white), // Set text color to white
-                      ),
-              ),
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
               const SizedBox(height: 16),
               if (_notificationMessage.isNotEmpty)
                 FadeTransition(

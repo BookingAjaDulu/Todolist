@@ -44,6 +44,8 @@ class BookingPage extends StatefulWidget {
 
 class _BookingPageState extends State<BookingPage> {
   List<Booking> bookingList = [];
+  List<Booking> filteredBookingList = [];
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -53,11 +55,7 @@ class _BookingPageState extends State<BookingPage> {
 
   Future<void> fetchDataPage() async {
     final response = await http.get(
-<<<<<<< HEAD
-      Uri.parse('http://192.168.18.5/lapang-api/public/booking'),
-=======
-      Uri.parse('http://192.168.1.18/booking-api/public/booking'),
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
+      Uri.parse('http://192.168.100.53/booking-api/public/booking'),
     );
 
     if (response.statusCode == 200) {
@@ -66,17 +64,16 @@ class _BookingPageState extends State<BookingPage> {
 
       setState(() {
         bookingList = bookings.map((item) => Booking.fromJson(item)).toList();
+        filteredBookingList = List.from(bookingList); // Clone bookingList
       });
+    } else {
+      // Handle API error
     }
   }
 
   Future<void> deleteBooking(String id) async {
     final response = await http.delete(
-<<<<<<< HEAD
-      Uri.parse('http://192.168.18.5/lapang-api/public/booking/$id'),
-=======
-      Uri.parse('http://192.168.1.18/booking-api/public/booking/$id'),
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
+      Uri.parse('http://192.168.100.53/booking-api/public/booking/$id'),
     );
 
     if (response.statusCode == 200) {
@@ -86,12 +83,24 @@ class _BookingPageState extends State<BookingPage> {
     }
   }
 
+  void filterBookingList(String query) {
+    List<Booking> filteredList = bookingList.where((booking) {
+      // Filter berdasarkan nama lapangan atau tanggal
+      return booking.namaLapang.toLowerCase().contains(query.toLowerCase()) ||
+          booking.tanggal.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    setState(() {
+      filteredBookingList = filteredList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('List Catatan Booking'),
-        backgroundColor: Colors.black, // Ubah warna Navbar menjadi hitam
+        backgroundColor: Color.fromARGB(255, 121, 116, 101),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -101,6 +110,15 @@ class _BookingPageState extends State<BookingPage> {
                 MaterialPageRoute(
                   builder: (context) => BookingForm(),
                 ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: BookingSearchDelegate(filteredBookingList),
               );
             },
           ),
@@ -125,11 +143,11 @@ class _BookingPageState extends State<BookingPage> {
           ],
         ),
       ),
-      backgroundColor: Colors.yellow, // Set latar belakang menjadi kuning
+      backgroundColor: Colors.yellow,
       body: ListView.builder(
-        itemCount: bookingList.length,
+        itemCount: filteredBookingList.length,
         itemBuilder: (context, index) {
-          final booking = bookingList[index];
+          final booking = filteredBookingList[index];
           return Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -198,3 +216,60 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 }
+
+class BookingSearchDelegate extends SearchDelegate<String> {
+  final List<Booking> bookingList;
+
+  BookingSearchDelegate(this.bookingList);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return SizedBox.shrink();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final List<Booking> suggestionList = query.isEmpty
+        ? bookingList
+        : bookingList.where((booking) {
+            return booking.namaLapang.toLowerCase().contains(query.toLowerCase()) ||
+                booking.tanggal.toLowerCase().contains(query.toLowerCase());
+          }).toList();
+
+    return ListView.builder(
+      itemCount: suggestionList.length,
+      itemBuilder: (context, index) {
+        final booking = suggestionList[index];
+        return ListTile(
+          title: Text("${booking.namaLapang} - ${booking.tanggal} ${booking.jamMulai}"),
+          onTap: () {
+            close(context, booking.id);
+          },
+        );
+      },
+    );
+  }
+}
+

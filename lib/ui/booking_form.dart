@@ -23,11 +23,7 @@ class _BookingFormState extends State<BookingForm> {
   late String _nominal = '';
 
   Future<String> _simpanData() async {
-<<<<<<< HEAD
-    const String url = 'http://192.168.18.5/lapang-api/public/booking';
-=======
-    const String url = 'http://192.168.1.18/booking-api/public/booking';
->>>>>>> 4267b2ee2af723c4f06bf9d40ecdf65502a67f87
+    const String url = 'http://192.168.100.53/booking-api/public/booking';
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -71,7 +67,7 @@ class _BookingFormState extends State<BookingForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Form Catatan Booking'),
-        backgroundColor: Colors.black, // Ubah warna Navbar menjadi hitam
+        backgroundColor: Color.fromARGB(255, 121, 116, 101), // Ubah warna Navbar menjadi hitam
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -139,19 +135,40 @@ class _BookingFormState extends State<BookingForm> {
     );
   }
 
-  Widget _textboxTanggal() {
-    return TextField(
-      decoration: InputDecoration(
+Widget _textboxTanggal() {
+  return TextField(
+    decoration: InputDecoration(
       labelText: "Tanggal",
       labelStyle: TextStyle(color: Colors.black), // Ubah warna label teks
       focusedBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.black), // Ubah warna garis bawah saat focus
       ),
+      suffixIcon: IconButton(
+        icon: Icon(Icons.calendar_today), // Icon untuk menampilkan date picker
+        onPressed: () {
+          _selectDate(context); // Memanggil fungsi untuk menampilkan date picker
+        },
+      ),
     ),
-      controller: _tanggalTextboxController,
-      cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
-    );
+    controller: _tanggalTextboxController,
+    cursorColor: Colors.black, // Ubah warna kursor menjadi hitam
+  );
+}
+
+Future<void> _selectDate(BuildContext context) async {
+  final DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(), // Tanggal awal saat date picker ditampilkan
+    firstDate: DateTime(2000), // Batas awal rentang tanggal yang dapat dipilih
+    lastDate: DateTime(2101), // Batas akhir rentang tanggal yang dapat dipilih
+  );
+  if (pickedDate != null && pickedDate != _tanggalTextboxController.text) {
+    setState(() {
+      _tanggalTextboxController.text = pickedDate.toString().substring(0, 10); // Mengubah format tanggal yang dipilih menjadi string dan menetapkannya ke dalam controller
+    });
   }
+}
+
 
   Widget _textboxJamMulai() {
     return TextField(
